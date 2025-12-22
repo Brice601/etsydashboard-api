@@ -7,15 +7,12 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime, timedelta
 import jwt
-from passlib.context import CryptContext
+import bcrypt
 
 from app.config import settings
 from app.database.supabase_client import get_supabase_client
 
 router = APIRouter()
-
-# Configuration password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Schemas Pydantic
 class UserRegister(BaseModel):
@@ -46,11 +43,11 @@ class UserInfo(BaseModel):
 # Fonctions utilitaires
 def hash_password(password: str) -> str:
     """Hash un mot de passe avec bcrypt"""
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Vérifie un mot de passe"""
-    return pwd_context.verify(plain_password, hashed_password)
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def create_access_token(user_id: str, email: str) -> str:
     """Crée un JWT token"""
