@@ -1,0 +1,25 @@
+# FastAPI & Server
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+
+# Database
+supabase==2.3.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Configuration
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# HTTP Client (pour appels externes futurs)
+httpx>=0.24.0,<0.25.0
+
+# Stripe (Phase 3)
+# stripe==7.0.0
+
+# Anthropic (Phase 3 - Premium)
+# anthropic==0.8.0
